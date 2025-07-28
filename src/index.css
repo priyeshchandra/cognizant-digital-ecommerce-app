@@ -2,39 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* E-commerce Fashion App Design System - Modern & Luxurious */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 99%;
+    --foreground: 240 10% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 240 10% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 240 10% 5%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Fashion Brand Colors - Sophisticated */
+    --primary: 240 15% 15%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 240 15% 10%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 10% 5%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 4% 95%;
+    --muted-foreground: 240 6% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 240 15% 15%;
+
+    /* Fashion App Specific Colors */
+    --fashion-gold: 45 90% 60%;
+    --fashion-rose: 345 85% 65%;
+    --fashion-navy: 220 40% 25%;
+    --fashion-cream: 45 25% 95%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-hover)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--fashion-rose)));
+    --gradient-luxury: linear-gradient(135deg, hsl(var(--fashion-navy)), hsl(var(--primary)));
+
+    /* Shadows */
+    --shadow-elegant: 0 10px 40px -10px hsl(var(--primary) / 0.2);
+    --shadow-product: 0 8px 30px -8px hsl(0 0% 0% / 0.12);
+    --shadow-avatar: 0 20px 60px -15px hsl(var(--accent) / 0.3);
 
     --radius: 0.5rem;
 
