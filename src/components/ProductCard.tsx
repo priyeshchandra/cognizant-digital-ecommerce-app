@@ -3,7 +3,8 @@ import { Product } from '@/types/product';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Star, Heart, ShoppingCart, Eye } from 'lucide-react';
+import { Product3D } from '@/components/Product3D';
+import { Star, Heart, ShoppingCart, Eye, Box } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -16,6 +17,7 @@ interface ProductCardProps {
 export const ProductCard = ({ product, onSelect, onTryOn, selected }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [show3D, setShow3D] = useState(false);
 
   return (
     <Card 
@@ -28,17 +30,33 @@ export const ProductCard = ({ product, onSelect, onTryOn, selected }: ProductCar
       onClick={() => onSelect(product)}
     >
       <div className="relative overflow-hidden">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-        />
+        {show3D ? (
+          <Product3D product={product} className="h-64" />
+        ) : (
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        )}
         
         {/* Overlay buttons */}
         <div className={cn(
           "absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 flex items-center justify-center gap-2",
           isHovered && "opacity-100"
         )}>
+          <Button
+            size="sm"
+            variant="secondary"
+            className="gap-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShow3D(!show3D);
+            }}
+          >
+            <Box className="h-4 w-4" />
+            3D View
+          </Button>
           <Button
             size="sm"
             variant="secondary"

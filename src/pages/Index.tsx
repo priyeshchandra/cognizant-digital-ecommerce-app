@@ -47,8 +47,36 @@ const Index = () => {
   };
 
   const handleThemeChange = (theme: string) => {
+    const root = document.documentElement;
+    
+    switch (theme) {
+      case 'ocean':
+        root.style.setProperty('--primary', '220 70% 50%');
+        root.style.setProperty('--primary-foreground', '0 0% 100%');
+        root.style.setProperty('--accent', '210 60% 60%');
+        break;
+      case 'forest':
+        root.style.setProperty('--primary', '120 60% 40%');
+        root.style.setProperty('--primary-foreground', '0 0% 100%');
+        root.style.setProperty('--accent', '110 50% 50%');
+        break;
+      case 'sunset':
+        root.style.setProperty('--primary', '25 95% 53%');
+        root.style.setProperty('--primary-foreground', '0 0% 100%');
+        root.style.setProperty('--accent', '35 85% 60%');
+        break;
+      case 'royal':
+        root.style.setProperty('--primary', '270 70% 50%');
+        root.style.setProperty('--primary-foreground', '0 0% 100%');
+        root.style.setProperty('--accent', '280 60% 60%');
+        break;
+      default:
+        root.style.setProperty('--primary', '222.2 84% 4.9%');
+        root.style.setProperty('--primary-foreground', '210 40% 98%');
+        root.style.setProperty('--accent', '210 40% 96%');
+    }
+    
     toast.success(`Theme changed to ${theme}!`);
-    // Here you would implement actual theme switching logic
   };
 
   return (
