@@ -126,8 +126,15 @@ export const ProductCard = ({ product, onSelect, onTryOn, onAddToCart, selected 
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedColorIndex(index);
-                  // Simulate different images for different colors
-                  setCurrentImage(product.hoverImage || product.image);
+                  // Switch between main image and hover image for different colors
+                  if (index === 0) {
+                    setCurrentImage(product.image);
+                  } else if (index === 1 && product.hoverImage) {
+                    setCurrentImage(product.hoverImage);
+                  } else {
+                    // For additional colors, alternate between the two available images
+                    setCurrentImage(index % 2 === 0 ? product.image : (product.hoverImage || product.image));
+                  }
                 }}
               />
             ))}

@@ -116,19 +116,6 @@ export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplay
               <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent animate-pulse" />
             )}
             
-            {/* Product Preview Overlay */}
-            {selectedProduct && !isScanning && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-black/50 rounded-lg p-4 max-w-[80%]">
-                  <img
-                    src={selectedProduct.image}
-                    alt={selectedProduct.name}
-                    className="w-full h-32 object-cover rounded mb-2"
-                  />
-                </div>
-              </div>
-            )}
-            
             {/* Current outfit indicator */}
             {selectedProduct && (
               <div className="absolute bottom-4 left-4 right-4">
