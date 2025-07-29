@@ -59,7 +59,7 @@ export const products: Product[] = [
     category: 'jeans',
     price: 94.99,
     image: jeans1,
-    colors: ['Dark Blue', 'Black', 'Light Blue'],
+    colors: ['Black', 'Dark Blue', 'Light Blue'],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     description: 'Modern slim fit jeans with stretch comfort.',
     rating: 4.4,

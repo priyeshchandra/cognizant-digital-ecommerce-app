@@ -14,6 +14,10 @@ import maleShortsAvatar from '@/assets/avatars/male-model-shorts.jpg';
 import femaleShortsAvatar from '@/assets/avatars/female-model-shorts.jpg';
 import maleShoesAvatar from '@/assets/avatars/male-model-shoes.jpg';
 import femaleShoesAvatar from '@/assets/avatars/female-model-shoes.jpg';
+import maleClassicJeansAvatar from '@/assets/avatars/male-model-classic-jeans.jpg';
+import femaleClassicJeansAvatar from '@/assets/avatars/female-model-classic-jeans.jpg';
+import maleSlimJeansAvatar from '@/assets/avatars/male-model-slim-jeans.jpg';
+import femaleSlimJeansAvatar from '@/assets/avatars/female-model-slim-jeans.jpg';
 
 interface AvatarDisplayProps {
   selectedProduct?: Product;
@@ -40,7 +44,10 @@ export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplay
     if (currentGender === 'male') {
       switch (category) {
         case 'shirts': return maleShirtAvatar;
-        case 'jeans': return maleJeansAvatar;
+        case 'jeans': 
+          return selectedProduct.name.toLowerCase().includes('slim') 
+            ? maleSlimJeansAvatar 
+            : maleClassicJeansAvatar;
         case 'shorts': return maleShortsAvatar;
         case 'shoes': return maleShoesAvatar;
         default: return maleAvatar;
@@ -48,7 +55,10 @@ export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplay
     } else {
       switch (category) {
         case 'shirts': return femaleShirtAvatar;
-        case 'jeans': return femaleJeansAvatar;
+        case 'jeans': 
+          return selectedProduct.name.toLowerCase().includes('slim') 
+            ? femaleSlimJeansAvatar 
+            : femaleClassicJeansAvatar;
         case 'shorts': return femaleShortsAvatar;
         case 'shoes': return femaleShoesAvatar;
         default: return femaleAvatar;
