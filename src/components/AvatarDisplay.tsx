@@ -6,6 +6,14 @@ import { User, UserCheck, Shirt } from 'lucide-react';
 import { Product } from '@/types/product';
 import maleAvatar from '@/assets/avatars/stylish-male-model.jpg';
 import femaleAvatar from '@/assets/avatars/stylish-female-model.jpg';
+import maleShirtAvatar from '@/assets/avatars/male-model-shirt.jpg';
+import femaleShirtAvatar from '@/assets/avatars/female-model-shirt.jpg';
+import maleJeansAvatar from '@/assets/avatars/male-model-jeans.jpg';
+import femaleJeansAvatar from '@/assets/avatars/female-model-jeans.jpg';
+import maleShortsAvatar from '@/assets/avatars/male-model-shorts.jpg';
+import femaleShortsAvatar from '@/assets/avatars/female-model-shorts.jpg';
+import maleShoesAvatar from '@/assets/avatars/male-model-shoes.jpg';
+import femaleShoesAvatar from '@/assets/avatars/female-model-shoes.jpg';
 
 interface AvatarDisplayProps {
   selectedProduct?: Product;
@@ -21,6 +29,31 @@ export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplay
   const handleGenderSwitch = (gender: 'male' | 'female') => {
     setCurrentGender(gender);
     onGenderChange(gender);
+  };
+
+  const getAvatarImage = () => {
+    if (!selectedProduct) {
+      return currentGender === 'male' ? maleAvatar : femaleAvatar;
+    }
+
+    const category = selectedProduct.category;
+    if (currentGender === 'male') {
+      switch (category) {
+        case 'shirts': return maleShirtAvatar;
+        case 'jeans': return maleJeansAvatar;
+        case 'shorts': return maleShortsAvatar;
+        case 'shoes': return maleShoesAvatar;
+        default: return maleAvatar;
+      }
+    } else {
+      switch (category) {
+        case 'shirts': return femaleShirtAvatar;
+        case 'jeans': return femaleJeansAvatar;
+        case 'shorts': return femaleShortsAvatar;
+        case 'shoes': return femaleShoesAvatar;
+        default: return femaleAvatar;
+      }
+    }
   };
 
   useEffect(() => {
@@ -89,7 +122,7 @@ export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplay
         <div className="relative">
           <div className="aspect-[3/4] bg-gradient-to-br from-fashion-cream to-secondary rounded-lg overflow-hidden relative">
             <img
-              src={currentGender === 'male' ? maleAvatar : femaleAvatar}
+              src={getAvatarImage()}
               alt={`${currentGender} avatar`}
               className={`w-full h-full object-cover transition-all duration-1000 ${
                 isChangingOutfit ? 'scale-105 blur-sm' : 'scale-100 blur-0'
