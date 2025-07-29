@@ -10,12 +10,15 @@ interface ProductCardProps {
   product: Product;
   onSelect: (product: Product) => void;
   onTryOn: (product: Product) => void;
+  onAddToCart: (product: Product) => void;
   selected?: boolean;
 }
 
-export const ProductCard = ({ product, onSelect, onTryOn, selected }: ProductCardProps) => {
+export const ProductCard = ({ product, onSelect, onTryOn, onAddToCart, selected }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [currentImage, setCurrentImage] = useState(product.image);
 
   return (
     <Card 
@@ -29,7 +32,7 @@ export const ProductCard = ({ product, onSelect, onTryOn, selected }: ProductCar
     >
       <div className="relative overflow-hidden">
         <img
-          src={product.image}
+          src={currentImage}
           alt={product.name}
           className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
         />
@@ -55,6 +58,10 @@ export const ProductCard = ({ product, onSelect, onTryOn, selected }: ProductCar
             size="sm"
             variant="default"
             className="gap-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart(product);
+            }}
           >
             <ShoppingCart className="h-4 w-4" />
             Add to Cart
@@ -108,11 +115,20 @@ export const ProductCard = ({ product, onSelect, onTryOn, selected }: ProductCar
           <span className="text-2xl font-bold">${product.price}</span>
           <div className="flex gap-1">
             {product.colors.slice(0, 3).map((color, index) => (
-              <div
+              <button
                 key={index}
-                className="w-4 h-4 rounded-full border border-border"
+                className={cn(
+                  "w-4 h-4 rounded-full border-2 transition-all duration-200 hover:scale-110",
+                  selectedColorIndex === index ? "border-primary" : "border-border"
+                )}
                 style={{ backgroundColor: color.toLowerCase() }}
                 title={color}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedColorIndex(index);
+                  // Simulate different images for different colors
+                  setCurrentImage(product.hoverImage || product.image);
+                }}
               />
             ))}
             {product.colors.length > 3 && (

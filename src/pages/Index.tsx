@@ -17,6 +17,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [userGender, setUserGender] = useState<'male' | 'female'>('female');
   const [filteredProducts, setFilteredProducts] = useState(products);
+  const [cartItems, setCartItems] = useState<Product[]>([]);
 
   // Filter products based on category and search
   useEffect(() => {
@@ -44,6 +45,11 @@ const Index = () => {
   const handleTryOn = (product: Product) => {
     setSelectedProduct(product);
     toast.success(`Trying on ${product.name} on your avatar!`);
+  };
+
+  const handleAddToCart = (product: Product) => {
+    setCartItems(prev => [...prev, product]);
+    toast.success(`${product.name} added to cart!`);
   };
 
   const handleThemeChange = (theme: string) => {
@@ -113,7 +119,7 @@ const Index = () => {
               </Button>
               <Button variant="outline" size="sm" className="gap-2">
                 <ShoppingBag className="h-4 w-4" />
-                Cart (0)
+                Cart ({cartItems.length})
               </Button>
             </div>
           </div>
@@ -166,6 +172,7 @@ const Index = () => {
                   product={product}
                   onSelect={handleProductSelect}
                   onTryOn={handleTryOn}
+                  onAddToCart={handleAddToCart}
                   selected={selectedProduct?.id === product.id}
                 />
               ))}

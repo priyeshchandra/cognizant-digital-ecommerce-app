@@ -15,6 +15,8 @@ interface AvatarDisplayProps {
 export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplayProps) => {
   const [currentGender, setCurrentGender] = useState<'male' | 'female'>('female');
   const [isChangingOutfit, setIsChangingOutfit] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
+  const [isScanning, setIsScanning] = useState(false);
 
   const handleGenderSwitch = (gender: 'male' | 'female') => {
     setCurrentGender(gender);
@@ -24,11 +26,31 @@ export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplay
   useEffect(() => {
     if (selectedProduct) {
       setIsChangingOutfit(true);
-      // Simulate outfit change animation
+      setIsScanning(true);
+      setScanProgress(0);
+      
+      // Simulate scanning progress
+      const scanInterval = setInterval(() => {
+        setScanProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(scanInterval);
+            setIsScanning(false);
+            return 100;
+          }
+          return prev + 2;
+        });
+      }, 30);
+      
+      // Complete outfit change
       const timer = setTimeout(() => {
         setIsChangingOutfit(false);
-      }, 1000);
-      return () => clearTimeout(timer);
+        setScanProgress(0);
+      }, 3000);
+      
+      return () => {
+        clearTimeout(timer);
+        clearInterval(scanInterval);
+      };
     }
   }, [selectedProduct]);
 
@@ -74,16 +96,44 @@ export const AvatarDisplay = ({ selectedProduct, onGenderChange }: AvatarDisplay
               }`}
             />
             
+            {/* Scanning Progress Bar */}
+            {isScanning && (
+              <div className="absolute inset-0">
+                <div 
+                  className="absolute left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent opacity-80 transition-all duration-100 ease-linear"
+                  style={{ 
+                    top: `${scanProgress}%`,
+                    transform: 'translateY(-50%)',
+                    boxShadow: '0 0 10px rgba(var(--primary), 0.5)'
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent animate-pulse" />
+              </div>
+            )}
+            
             {/* Outfit overlay effect */}
-            {isChangingOutfit && (
+            {isChangingOutfit && !isScanning && (
               <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent animate-pulse" />
+            )}
+            
+            {/* Product Preview Overlay */}
+            {selectedProduct && !isScanning && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-black/50 rounded-lg p-4 max-w-[80%]">
+                  <img
+                    src={selectedProduct.image}
+                    alt={selectedProduct.name}
+                    className="w-full h-32 object-cover rounded mb-2"
+                  />
+                </div>
+              </div>
             )}
             
             {/* Current outfit indicator */}
             {selectedProduct && (
               <div className="absolute bottom-4 left-4 right-4">
                 <Badge variant="secondary" className="w-full justify-center bg-white/90">
-                  Wearing: {selectedProduct.name}
+                  {isScanning ? `Applying ${selectedProduct.name}... ${scanProgress}%` : `Wearing: ${selectedProduct.name}`}
                 </Badge>
               </div>
             )}
