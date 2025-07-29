@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { User, UserCheck, Shirt } from 'lucide-react';
 import { Product } from '@/types/product';
-import maleAvatar from '@/assets/avatars/male-avatar.jpg';
-import femaleAvatar from '@/assets/avatars/female-avatar.jpg';
+import maleAvatar from '@/assets/avatars/stylish-male-model.jpg';
+import femaleAvatar from '@/assets/avatars/stylish-female-model.jpg';
 
 interface AvatarDisplayProps {
   selectedProduct?: Product;
