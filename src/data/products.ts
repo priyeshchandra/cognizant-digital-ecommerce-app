@@ -3,6 +3,7 @@ import jeans1 from '@/assets/products/jeans-1.jpg';
 import shirt1 from '@/assets/products/shirt-1.jpg';
 import shorts1 from '@/assets/products/shorts-1.jpg';
 import shoes1 from '@/assets/products/shoes-1.jpg';
+import blackJeans1 from '@/assets/products/black-jeans-1.jpg';
 
 export const products: Product[] = [
   {
@@ -58,7 +59,7 @@ export const products: Product[] = [
     name: 'Slim Fit Black Jeans',
     category: 'jeans',
     price: 94.99,
-    image: jeans1,
+    image: blackJeans1,
     colors: ['Black'],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     description: 'Modern slim fit black jeans with stretch comfort.',
