@@ -55,13 +55,13 @@ export const products: Product[] = [
   },
   {
     id: '5',
-    name: 'Slim Fit Jeans',
+    name: 'Slim Fit Black Jeans',
     category: 'jeans',
     price: 94.99,
     image: jeans1,
-    colors: ['Black', 'Dark Blue', 'Light Blue'],
+    colors: ['Black'],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    description: 'Modern slim fit jeans with stretch comfort.',
+    description: 'Modern slim fit black jeans with stretch comfort.',
     rating: 4.4,
     reviews: 89
   },
