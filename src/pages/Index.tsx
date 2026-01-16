@@ -1,33 +1,40 @@
 import { useState, useEffect } from 'react';
-import { Search, ShoppingBag, Menu, Bell } from 'lucide-react';
+import { ShoppingBag, Menu, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { ProductCard } from '@/components/ProductCard';
 import { AvatarDisplay } from '@/components/AvatarDisplay';
 import { ProductFilter } from '@/components/ProductFilter';
 import { RecommendationEngine } from '@/components/RecommendationEngine';
 import { ThemeSelector } from '@/components/ThemeSelector';
+import { AdvancedSearchPanel } from '@/components/AdvancedSearchPanel';
 import { products } from '@/data/products';
 import { Product } from '@/types/product';
 import { toast } from 'sonner';
+import { ParsedSearchQuery, filterProductsByNLP } from '@/lib/nlpSearchParser';
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
   const [searchQuery, setSearchQuery] = useState('');
+  const [nlpQuery, setNlpQuery] = useState<ParsedSearchQuery | null>(null);
   const [userGender, setUserGender] = useState<'male' | 'female'>('female');
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [cartItems, setCartItems] = useState<Product[]>([]);
 
-  // Filter products based on category and search
+  // Filter products based on category, search, and NLP query
   useEffect(() => {
     let filtered = products;
     
-    if (selectedCategory !== 'all') {
+    // Apply category filter only if not using NLP search
+    if (selectedCategory !== 'all' && !nlpQuery) {
       filtered = filtered.filter(product => product.category === selectedCategory);
     }
     
-    if (searchQuery) {
+    // Apply NLP-based filtering if we have a parsed query
+    if (nlpQuery) {
+      filtered = filterProductsByNLP(products, nlpQuery);
+    } else if (searchQuery) {
+      // Fallback to basic text search if no NLP query
       filtered = filtered.filter(product => 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -35,7 +42,25 @@ const Index = () => {
     }
     
     setFilteredProducts(filtered);
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, nlpQuery]);
+
+  const handleNLPSearch = (query: string, parsedQuery: ParsedSearchQuery) => {
+    setSearchQuery(query);
+    setNlpQuery(parsedQuery);
+    
+    // Reset category filter when using NLP search
+    if (parsedQuery.categories.length > 0 || parsedQuery.colors.length > 0 || 
+        parsedQuery.fits.length > 0 || query) {
+      setSelectedCategory('all');
+    }
+    
+    const filterCount = parsedQuery.categories.length + parsedQuery.colors.length + 
+      parsedQuery.fits.length + (parsedQuery.sortBy ? 1 : 0);
+    
+    if (filterCount > 0 || query) {
+      toast.success(`Found ${filterProductsByNLP(products, parsedQuery).length} products matching your criteria`);
+    }
+  };
 
   const handleProductSelect = (product: Product) => {
     setSelectedProduct(product);
@@ -100,16 +125,8 @@ const Index = () => {
               </h1>
             </div>
             
-            <div className="hidden md:flex flex-1 max-w-md mx-8">
-              <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
+            <div className="hidden md:block text-sm text-muted-foreground">
+              AI-Powered Search
             </div>
 
             <div className="flex items-center gap-2">
@@ -143,26 +160,19 @@ const Index = () => {
 
           {/* Product Grid */}
           <div className="lg:col-span-2">
+            {/* NLP Search Panel */}
+            <AdvancedSearchPanel 
+              onSearch={handleNLPSearch}
+              className="mb-6"
+            />
+
             <div className="mb-6">
               <h2 className="text-2xl font-bold mb-2">
                 {selectedCategory === 'all' ? 'All Products' : selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
               </h2>
               <p className="text-muted-foreground">
-                Discover our latest collection of premium fashion items
+                {filteredProducts.length} products found
               </p>
-            </div>
-
-            {/* Mobile Search */}
-            <div className="md:hidden mb-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
