@@ -7,6 +7,7 @@ import { ProductFilter } from '@/components/ProductFilter';
 import { RecommendationEngine } from '@/components/RecommendationEngine';
 import { ThemeSelector } from '@/components/ThemeSelector';
 import { AdvancedSearchPanel } from '@/components/AdvancedSearchPanel';
+import { HeroCarousel } from '@/components/HeroCarousel';
 import { products } from '@/data/products';
 import { Product } from '@/types/product';
 import { toast } from 'sonner';
@@ -142,6 +143,15 @@ const Index = () => {
           </div>
         </div>
       </header>
+
+      {/* Hero Carousel */}
+      <section className="container mx-auto px-4 pt-6">
+        <HeroCarousel
+          products={products}
+          onProductClick={handleProductSelect}
+          onAddToCart={handleAddToCart}
+        />
+      </section>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6">
