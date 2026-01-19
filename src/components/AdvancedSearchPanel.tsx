@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, X, Sparkles, Filter, ChevronDown, ChevronUp, Lightbulb, ChevronLeft, ChevronRight, Globe, User } from 'lucide-react';
+import { Search, X, Sparkles, Filter, ChevronDown, ChevronUp, Lightbulb } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -148,39 +148,6 @@ export function AdvancedSearchPanel({ onSearch, className }: AdvancedSearchPanel
 
   return (
     <div className={cn("space-y-4", className)}>
-      {/* Promotional Banner */}
-      <div className="bg-amber-100 dark:bg-amber-900/30 border-b border-amber-200 dark:border-amber-800 py-2 px-4 -mx-4 sm:-mx-6 lg:-mx-8">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex items-center gap-4 flex-1">
-            <button className="p-1 hover:bg-amber-200 dark:hover:bg-amber-800 rounded-full transition-colors">
-              <ChevronLeft className="h-4 w-4 text-foreground" />
-            </button>
-            <div className="flex-1 text-center">
-              <span className="text-sm font-medium text-foreground">
-                New Email Subscribers: 10% Off Your First Order!{' '}
-                <a href="#" className="underline hover:no-underline font-semibold">
-                  Details
-                </a>
-              </span>
-            </div>
-            <button className="p-1 hover:bg-amber-200 dark:hover:bg-amber-800 rounded-full transition-colors">
-              <ChevronRight className="h-4 w-4 text-foreground" />
-            </button>
-          </div>
-          
-          <div className="hidden sm:flex items-center gap-6 ml-8">
-            <a href="#" className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
-              <User className="h-4 w-4" />
-              <span>Join Now</span>
-            </a>
-            <button className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
-              <Globe className="h-4 w-4" />
-              <span>United States</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Main Search Bar */}
       <div className="relative">
         <div className="relative flex gap-2">
