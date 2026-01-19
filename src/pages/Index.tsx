@@ -103,9 +103,10 @@ const Index = () => {
         root.style.setProperty('--accent', '280 60% 60%');
         break;
       default:
-        root.style.setProperty('--primary', '222.2 84% 4.9%');
-        root.style.setProperty('--primary-foreground', '210 40% 98%');
-        root.style.setProperty('--accent', '210 40% 96%');
+        // Levi's Red brand colors
+        root.style.setProperty('--primary', '352 85% 43%');
+        root.style.setProperty('--primary-foreground', '0 0% 100%');
+        root.style.setProperty('--accent', '352 85% 43%');
     }
     
     toast.success(`Theme changed to ${theme}!`);
