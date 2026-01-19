@@ -126,9 +126,6 @@ const Index = () => {
               </h1>
             </div>
             
-            <div className="hidden md:block text-sm text-muted-foreground">
-              AI-Powered Search
-            </div>
 
             <div className="flex items-center gap-2">
               <ThemeSelector onThemeChange={handleThemeChange} />
