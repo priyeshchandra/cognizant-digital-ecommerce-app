@@ -217,7 +217,7 @@ Empower customers to make confident purchase decisions by visualizing how produc
 | Recommendations | ✅ Complete | 100% |
 | Theme Engine | ✅ Complete | 100% |
 | Hero Carousel | ✅ Complete | 100% |
-| Voice-Enabled Search | 📋 Planned | 0% |
+| Voice-Enabled Search | ✅ Complete | 100% |
 | Shopping Cart | ⚠️ Basic | 60% |
 | User Authentication | ❌ Not Started | 0% |
 | Payment Integration | ❌ Not Started | 0% |
