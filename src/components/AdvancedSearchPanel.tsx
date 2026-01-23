@@ -18,6 +18,10 @@ import {
   getActiveFilters 
 } from '@/lib/nlpSearchParser';
 import { cn } from '@/lib/utils';
+import { useVoiceSearch } from '@/hooks/use-voice-search';
+import { VoiceSearchButton } from '@/components/VoiceSearchButton';
+import { VoiceTranscriptDisplay } from '@/components/VoiceTranscriptDisplay';
+import { toast } from 'sonner';
 
 interface AdvancedSearchPanelProps {
   onSearch: (query: string, parsedQuery: ParsedSearchQuery) => void;
@@ -36,12 +40,40 @@ export function AdvancedSearchPanel({ onSearch, className }: AdvancedSearchPanel
   const [parsedQuery, setParsedQuery] = useState<ParsedSearchQuery | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
+  // Voice search hook
+  const {
+    isListening,
+    isSupported,
+    transcript,
+    interimTranscript,
+    error: voiceError,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useVoiceSearch();
+  
   // Advanced filter states
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedFits, setSelectedFits] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 150]);
   const [sortBy, setSortBy] = useState<ParsedSearchQuery['sortBy']>();
+
+  // Update search query when voice transcript changes
+  useEffect(() => {
+    if (transcript) {
+      setSearchQuery(transcript);
+    }
+  }, [transcript]);
+
+  // Auto-search when voice recognition stops and we have a transcript
+  useEffect(() => {
+    if (!isListening && transcript) {
+      const parsed = parseNaturalLanguageQuery(transcript);
+      onSearch(transcript, parsed);
+      toast.success(`Voice search: "${transcript}"`);
+    }
+  }, [isListening, transcript]);
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -109,6 +141,7 @@ export function AdvancedSearchPanel({ onSearch, className }: AdvancedSearchPanel
     setSelectedFits([]);
     setPriceRange([0, 150]);
     setSortBy(undefined);
+    resetTranscript();
     onSearch('', {
       categories: [],
       colors: [],
@@ -155,30 +188,49 @@ export function AdvancedSearchPanel({ onSearch, className }: AdvancedSearchPanel
             <Sparkles className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
             <Input
               ref={inputRef}
-              placeholder="Try: 'blue slim jeans under $100' or 'casual shirts top rated'"
+              placeholder={isListening ? "Listening..." : "Try: 'blue slim jeans under $100' or click 🎤 to speak"}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               onKeyDown={handleKeyDown}
-              className="pl-10 pr-10 h-12 text-base border-primary/20 focus:border-primary"
+              className={cn(
+                "pl-10 pr-20 h-12 text-base border-primary/20 focus:border-primary",
+                isListening && "border-primary ring-2 ring-primary/20"
+              )}
             />
-            {searchQuery && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-                onClick={clearSearch}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
+            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+              <VoiceSearchButton
+                isListening={isListening}
+                isSupported={isSupported}
+                onStart={startListening}
+                onStop={stopListening}
+              />
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  onClick={clearSearch}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
           <Button onClick={handleSearch} className="h-12 px-6">
             <Search className="h-4 w-4 mr-2" />
             Search
           </Button>
         </div>
+
+        {/* Voice Transcript Display */}
+        <VoiceTranscriptDisplay
+          isListening={isListening}
+          transcript={transcript}
+          interimTranscript={interimTranscript}
+          error={voiceError}
+        />
 
         {/* AI-Powered Suggestions */}
         {showSuggestions && suggestions.length > 0 && (
