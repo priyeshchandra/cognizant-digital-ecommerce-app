@@ -1,0 +1,4 @@
+project_id = "kptsvglhnurxihuodxaj"
+
+[functions.ai-stylist-chat]
+verify_jwt = false

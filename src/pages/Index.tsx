@@ -8,6 +8,7 @@ import { RecommendationEngine } from '@/components/RecommendationEngine';
 import { ThemeSelector } from '@/components/ThemeSelector';
 import { AdvancedSearchPanel } from '@/components/AdvancedSearchPanel';
 import { HeroCarousel } from '@/components/HeroCarousel';
+import { AIStylistChatbot } from '@/components/AIStylistChatbot';
 import { products } from '@/data/products';
 import { Product } from '@/types/product';
 import { toast } from 'sonner';
@@ -214,6 +215,9 @@ const Index = () => {
           </div>
         </div>
       </main>
+
+      {/* AI Stylist Chatbot */}
+      <AIStylistChatbot />
     </div>
   );
 };
