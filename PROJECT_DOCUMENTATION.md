@@ -191,6 +191,48 @@ Empower customers to make confident purchase decisions by visualizing how produc
 
 ---
 
+### UC-08: AI Stylist Chatbot (Jeanius)
+
+**Actor**: Customer
+
+**Description**: An AI-powered personal stylist chatbot that provides real-time fashion advice, product recommendations, and styling tips through natural conversation.
+
+**Features**:
+- **Personalized Styling Advice**: Get outfit recommendations based on preferences and occasions
+- **Product Knowledge**: Deep understanding of the entire product catalog with pricing and details
+- **Fit Guidance**: Expert advice on denim fits (slim, straight, relaxed, etc.) for different body types
+- **Color Coordination**: Suggestions for matching colors and creating complete outfits
+- **Trend Awareness**: Current fashion trends and how to incorporate them
+- **Care Tips**: Fabric quality information and maintenance recommendations
+
+**Flow**:
+1. Customer clicks the floating chat button (bottom-right corner)
+2. Jeanius AI greets and offers assistance
+3. Customer types styling questions or product inquiries
+4. AI responds with personalized recommendations from the catalog
+5. Customer can ask follow-up questions for refined suggestions
+6. Chat can be minimized, maximized, or closed as needed
+
+**Technical Implementation**:
+- Backend: Lovable Cloud Edge Function (`ai-stylist-chat`)
+- AI Model: Google Gemini 3 Flash Preview via Lovable AI Gateway
+- Streaming: Real-time response streaming for natural conversation flow
+- UI: Floating, minimizable chat widget with message history
+
+**Example Interactions**:
+- "What jeans would look good for a casual weekend?"
+- "I'm looking for something professional for work"
+- "What goes well with the Classic Blue Jeans?"
+- "Help me pick shoes to match my outfit"
+
+**Business Value**: 
+- Increases customer engagement and time-on-site
+- Provides 24/7 personalized styling assistance
+- Reduces decision paralysis and cart abandonment
+- Differentiates brand as an AI innovation leader
+
+---
+
 ## Current Implementation
 
 ### Technology Stack
@@ -218,6 +260,7 @@ Empower customers to make confident purchase decisions by visualizing how produc
 | Theme Engine | ✅ Complete | 100% |
 | Hero Carousel | ✅ Complete | 100% |
 | Voice-Enabled Search | ✅ Complete | 100% |
+| AI Stylist Chatbot | ✅ Complete | 100% |
 | Shopping Cart | ⚠️ Basic | 60% |
 | User Authentication | ❌ Not Started | 0% |
 | Payment Integration | ❌ Not Started | 0% |
@@ -236,7 +279,8 @@ src/
 │   ├── AdvancedSearchPanel.tsx # NLP search interface
 │   ├── RecommendationEngine.tsx # AI recommendations
 │   ├── HeroCarousel.tsx       # Featured products
-│   └── ThemeSelector.tsx      # Theme switching
+│   ├── ThemeSelector.tsx      # Theme switching
+│   └── AIStylistChatbot.tsx   # AI fashion assistant
 ├── data/
 │   └── products.ts            # Product catalog data
 ├── lib/
@@ -297,10 +341,11 @@ src/
 - [x] Responsive design optimization
 - [x] Accessibility improvements
 
-### Phase 4: Backend Integration (Planned 📋)
+### Phase 4: Backend Integration (In Progress 🚧)
 **Duration**: 4-6 weeks
 
-- [ ] Enable Lovable Cloud (Supabase)
+- [x] Enable Lovable Cloud
+- [x] AI Stylist Chatbot (Jeanius) with streaming responses
 - [ ] User authentication (email/password, social)
 - [ ] Persistent shopping cart
 - [ ] User profile and preferences
@@ -504,7 +549,9 @@ User Action → Component → State Update → Re-render → UI Update
 - AR try-on with device camera
 - Advanced voice assistant with conversational AI
 - Social sharing integration
-- AI stylist chatbot
+- ~~AI stylist chatbot~~ ✅ Completed (January 2025)
+- Photo-based outfit analysis (upload image for AI styling suggestions)
+- Product click-through from chatbot recommendations
 
 ---
 
