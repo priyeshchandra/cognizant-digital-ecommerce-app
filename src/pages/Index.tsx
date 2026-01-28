@@ -9,6 +9,7 @@ import { ThemeSelector } from '@/components/ThemeSelector';
 import { AdvancedSearchPanel } from '@/components/AdvancedSearchPanel';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { AIStylistChatbot } from '@/components/AIStylistChatbot';
+import { DemoTourButton } from '@/components/DemoTourButton';
 import { products } from '@/data/products';
 import { Product } from '@/types/product';
 import { toast } from 'sonner';
@@ -130,6 +131,7 @@ const Index = () => {
             
 
             <div className="flex items-center gap-2">
+              <DemoTourButton />
               <ThemeSelector onThemeChange={handleThemeChange} />
               <Button variant="ghost" size="sm">
                 <Bell className="h-5 w-5" />
